@@ -6,6 +6,7 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
+  api.versionFrom("1.1.0");
 
   api.use([
     "ddp",
