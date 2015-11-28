@@ -1,55 +1,53 @@
 Meteor Remote DDP
 =================
 
-When building apps with decoupled client-code and server-code (say mobile apps, for example), your client connects via DDP to its own server by default. 
+When building an app with decoupled client-code and server-code (say a mobile version of an existing app), your client connects via DDP to its own server by default. 
 
 This package allows you to specify a remote DDP server for Accounts, subscriptions and Meteor methods.
 
-This package is quite brittle. It relies heavily on private APIs and monkey patching.
-
-Installation
-------------
-
-```
-git clone https://github.com/BudgieInWA/meteor-remote-ddp.git packages/meteor-ddp
-meteor add budgie:remote-ddp
-```
-
-If you use accounts-base, or any dependant package, you must edit `.meteor/packages` to move `budgie:remote-ddp` above any such packages.
+This package is quite brittle. It relies heavily on private APIs and monkey patching and has been
+tested by the author on **Meteor 1.1**. Bug reports welcome.
 
 Usage
 -----
 
-Add the remote to your settings JSON file:
+1. `meteor add budgie:remote-ddp`
 
-``` json
-{
-  "public": {
-    "remoteDdpUrl": "http://localhost:5000"
-  }
-}
-```
+	If you use accounts-base, or any dependant package, you must edit `.meteor/packages` to move `budgie:remote-ddp` above any such packages.
 
-In your client code, before doing anything that uses DDP, initialise RemoteDDP:
+1. Add the remote to your settings JSON file:
 
-``` javascript
-RemoteDDP.monkeyPatch();
-```
+	``` json
+	{
+	  "public": {
+		"remoteDdpUrl": "http://localhost:5000"
+	  }
+	}
+	```
 
-Launch Meteor using your settings file:
+1. In your client code, before doing anything that uses DDP, initialise RemoteDDP:
 
-``` sh
-meteor --settings settings.json
-```
+	``` javascript
+	RemoteDDP.monkeyPatch();
+	```
+	
+	*Note that the `Accounts` package uses DDP as it is initialised, but this package works around that as a special case (see step 1.).*
+
+1. Launch Meteor using your settings file:
+
+	``` sh
+	meteor --settings settings.json
+	```
+
+
+Contributing
+------------
+
+Please send Issues and Pull Requests to <https://github.com/BudgieInWA/meteor-remote-ddp>.
 
 Notes
 -----  
 
 - Based on [gwendall:remote-ddp](https://github.com/gwendall/meteor-remote-ddp).
-- Does not work in Cordova. To access a different server, use the --mobile-server flag instead.
-- I don't know about Mongo.Collection support.
-
-To Do
------  
-
-- Publish to atmosphere?
+- The author is not convinced that the `Mongo.Collection` support is bulletproof.
+- Does not work in Cordova. To access a different server, use the `--mobile-server` flag instead.
